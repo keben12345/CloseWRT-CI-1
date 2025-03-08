@@ -46,4 +46,6 @@ sed -i '/wifi-profile/d' ./.config
         sed -i 's/CONFIG_PACKAGE_luci-i18n-mtwifi-cfg-zh-cn=y/CONFIG_PACKAGE_luci-i18n-mtk-zh-cn=y/g' .config
         sed -i 's/CONFIG_PACKAGE_mtwifi-cfg=y/CONFIG_PACKAGE_wifi-profile=y/g' .config
         sed -i 's/CONFIG_PACKAGE_lua-cjson=y/CONFIG_WIFI_NORMAL_SETTING=y/g' .config
+	sed -i 's/MT7981_AX3000_2.4G/ImmortalWrt/g' package/mtk/drivers/wifi-profile/files/mt7981/mt7981.dbdc.b0.dat
+        sed -i 's/MT7981_AX3000_5G/ImmortalWrt-5G/g' package/mtk/drivers/wifi-profile/files/mt7981/mt7981.dbdc.b1.dat
         
