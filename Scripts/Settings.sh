@@ -38,5 +38,12 @@ fi
 sed -i '/MEMORY_SHRINK/d' ./.config
 sed -i '/luci-app-mtk/d' ./.config
 sed -i '/wifi-profile/d' ./.config
-echo "CONFIG_PACKAGE_luci-app-mtk=n" >> ./.config
-echo "CONFIG_PACKAGE_wifi-profile=n" >> ./.config
+# echo "CONFIG_PACKAGE_luci-app-mtk=n" >> ./.config
+# echo "CONFIG_PACKAGE_wifi-profile=n" >> ./.config
+# 使用luci-app-mtk无线配置
+        cd openwrt
+        sed -i 's/CONFIG_PACKAGE_luci-app-mtwifi-cfg=y/CONFIG_PACKAGE_luci-app-mtk=y/g' .config
+        sed -i 's/CONFIG_PACKAGE_luci-i18n-mtwifi-cfg-zh-cn=y/CONFIG_PACKAGE_luci-i18n-mtk-zh-cn=y/g' .config
+        sed -i 's/CONFIG_PACKAGE_mtwifi-cfg=y/CONFIG_PACKAGE_wifi-profile=y/g' .config
+        sed -i 's/CONFIG_PACKAGE_lua-cjson=y/CONFIG_WIFI_NORMAL_SETTING=y/g' .config
+        
