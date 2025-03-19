@@ -15,7 +15,7 @@ on:
         default: 'padavanonly/immortalwrt-mt798x-24.10'
         required: true
         type: choice
-        options: [keben12345/immortalwrt-mt798x-24.1-10, NekokeCore/immortalwrt-mt798x-24.10]
+        options: [padavanonly/immortalwrt-mt798x-24.10, NekokeCore/immortalwrt-mt798x-24.10]
       BRANCH:
         default: '2410'
         required: true
