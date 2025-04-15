@@ -15,11 +15,11 @@ on:
           - MT7986
           - TEST
       SOURCE:
-        default: 'padavanonly/immortalwrt-mt798x-24.10'
+        default: 'keben12345/immortalwrt-mt798x-24.10-1'
         required: true
         type: choice
         options:
-         - padavanonly/immortalwrt-mt798x-24.10
+         - keben12345/immortalwrt-mt798x-24.10-1
          - NekokeCore/immortalwrt-mt798x-24.10
       BRANCH:
         default: '2410'
