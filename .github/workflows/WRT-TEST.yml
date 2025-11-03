@@ -25,9 +25,6 @@ on:
         default: 'openwrt-24.10-6.6'
         required: true
         type: string
-        options:
-         - openwrt-24.10-6.6
-         - main       
       PACKAGE:
         required: false
         type: string
