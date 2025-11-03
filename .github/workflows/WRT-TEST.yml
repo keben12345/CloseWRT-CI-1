@@ -20,7 +20,7 @@ on:
         type: choice
         options:
          - padavanonly/immortalwrt-mt798x-6.6
-         - DeepblueG/immortalwrt-mt798x-24.10-6.6.110
+         - keben12345/immortalwrt-mt798x-24.10-6.6.110
       BRANCH:
         default: 'openwrt-24.10-6.6'
         required: true
