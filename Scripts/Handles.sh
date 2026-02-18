@@ -66,14 +66,31 @@ if [ -f "$TS_FILE" ]; then
 fi
 
 #修复Rust编译失败
-RUST_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
+#RUST_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
+#if [ -f "$RUST_FILE" ]; then
+#	echo " "
+
+#	sed -i 's/ci-llvm=true/ci-llvm=false/g' $RUST_FILE
+
+#	cd $PKG_PATH && echo "rust has been fixed!"
+#fi
+RUST_FILE=$(find ../feeds/packages/ -maxdepth 4 -type f -path "*/lang/rust/Makefile")
+
 if [ -f "$RUST_FILE" ]; then
-	echo " "
+    echo "Fix rust for CI..."
 
-	sed -i 's/ci-llvm=true/ci-llvm=false/g' $RUST_FILE
+    # 关闭共享LLVM
+    sed -i 's/LLVM_LINK_SHARED:=1/LLVM_LINK_SHARED:=0/g' $RUST_FILE
 
-	cd $PKG_PATH && echo "rust has been fixed!"
+    # 禁用 mips16
+    sed -i 's/PKG_BUILD_FLAGS:=/PKG_BUILD_FLAGS:=no-mips16 /g' $RUST_FILE
+
+    # 限制并发
+    echo 'MAKEFLAGS=-j1' >> ../.config
+
+    echo "rust fixed for CI!"
 fi
+
 
 #修复DiskMan编译失败
 DM_FILE="./luci-app-diskman/applications/luci-app-diskman/Makefile"
