@@ -91,6 +91,7 @@ if [ -f "$RUST_FILE" ]; then
     echo "rust fixed for CI!"
 fi
 
+echo "MAKEFLAGS=-j1" >> .config
 
 #修复DiskMan编译失败
 DM_FILE="./luci-app-diskman/applications/luci-app-diskman/Makefile"
