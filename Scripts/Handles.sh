@@ -74,6 +74,9 @@ fi
 
 #	cd $PKG_PATH && echo "rust has been fixed!"
 #fi
+pushd feeds/packages/lang
+git checkout 3a8f7d0
+popd
 RUST_FILE=$(find ../feeds/packages/ -maxdepth 4 -type f -path "*/lang/rust/Makefile")
 
 if [ -f "$RUST_FILE" ]; then
@@ -91,8 +94,10 @@ if [ -f "$RUST_FILE" ]; then
     echo "rust fixed for CI!"
 fi
 
-echo "MAKEFLAGS=-j1" >> .config
-rm -rf feeds/packages/lang/rust
+pushd feeds/packages/lang
+git checkout 3a8f7d0
+popd
+
 
 #修复DiskMan编译失败
 DM_FILE="./luci-app-diskman/applications/luci-app-diskman/Makefile"
