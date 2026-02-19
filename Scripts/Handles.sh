@@ -75,22 +75,8 @@ fi
 #	cd $PKG_PATH && echo "rust has been fixed!"
 #fi
 # 修复 Rust 编译失败（锁定稳定版本）
-RUST_DIR="../feeds/packages/lang/rust"
 
-if [ -d "$RUST_DIR" ]; then
-    echo "Fixing rust for ImmortalWrt 24.10..."
-
-    pushd ../feeds/packages > /dev/null
-
-    # 回退 rust 到 1个月前的稳定版本（避免最新 rust 爆炸）
-    git checkout HEAD~30 -- lang/rust
-
-    popd > /dev/null
-
-    echo "Rust has been rolled back to stable version!"
-fi
-
-
+sed -i 's/^PKG_VERSION:=.*/PKG_VERSION:=1.74.1/' ../feeds/packages/lang/rust/Makefile
 
 #修复DiskMan编译失败
 DM_FILE="./luci-app-diskman/applications/luci-app-diskman/Makefile"
