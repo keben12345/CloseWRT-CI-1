@@ -66,17 +66,18 @@ if [ -f "$TS_FILE" ]; then
 fi
 
 #修复Rust编译失败
-#RUST_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
-#if [ -f "$RUST_FILE" ]; then
-#	echo " "
-
-#	sed -i 's/ci-llvm=true/ci-llvm=false/g' $RUST_FILE
-
-#	cd $PKG_PATH && echo "rust has been fixed!"
-#fi
-# 修复 Rust 编译失败（锁定稳定版本）
-
 sed -i 's/^PKG_VERSION:=.*/PKG_VERSION:=1.74.1/' ../feeds/packages/lang/rust/Makefile
+RUST_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
+if [ -f "$RUST_FILE" ]; then
+	echo " "
+
+	sed -i 's/ci-llvm=true/ci-llvm=false/g' $RUST_FILE
+
+	cd $PKG_PATH && echo "rust has been fixed!"
+fi
+ 修复 Rust 编译失败（锁定稳定版本）
+
+
 
 #修复DiskMan编译失败
 DM_FILE="./luci-app-diskman/applications/luci-app-diskman/Makefile"
