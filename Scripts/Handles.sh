@@ -74,29 +74,22 @@ fi
 
 #	cd $PKG_PATH && echo "rust has been fixed!"
 #fi
-pushd feeds/packages/lang
-git checkout 3a8f7d0
-popd
-RUST_FILE=$(find ../feeds/packages/ -maxdepth 4 -type f -path "*/lang/rust/Makefile")
+# 修复 Rust 编译失败（锁定稳定版本）
+RUST_DIR="../feeds/packages/lang/rust"
 
-if [ -f "$RUST_FILE" ]; then
-    echo "Fix rust for CI..."
+if [ -d "$RUST_DIR" ]; then
+    echo "Fixing rust for ImmortalWrt 24.10..."
 
-    # 关闭共享LLVM
-    sed -i 's/LLVM_LINK_SHARED:=1/LLVM_LINK_SHARED:=0/g' $RUST_FILE
+    pushd ../feeds/packages > /dev/null
 
-    # 禁用 mips16
-    sed -i 's/PKG_BUILD_FLAGS:=/PKG_BUILD_FLAGS:=no-mips16 /g' $RUST_FILE
+    # 回退 rust 到 1个月前的稳定版本（避免最新 rust 爆炸）
+    git checkout HEAD~30 -- lang/rust
 
-    # 限制并发
-    echo 'MAKEFLAGS=-j1' >> ../.config
+    popd > /dev/null
 
-    echo "rust fixed for CI!"
+    echo "Rust has been rolled back to stable version!"
 fi
 
-pushd feeds/packages/lang
-git checkout 3a8f7d0
-popd
 
 
 #修复DiskMan编译失败
