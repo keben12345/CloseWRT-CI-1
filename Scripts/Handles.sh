@@ -66,20 +66,28 @@ if [ -f "$TS_FILE" ]; then
 fi
 
 #修复Rust编译失败
-sed -i 's/^PKG_VERSION:=.*/PKG_VERSION:=1.74.1/' ../feeds/packages/lang/rust/Makefile
-RUST_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
+# sed -i 's/^PKG_VERSION:=.*/PKG_VERSION:=1.74.1/' ../feeds/packages/lang/rust/Makefile
+# RUST_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
+# if [ -f "$RUST_FILE" ]; then
+#	echo " "
+
+#	sed -i 's/ci-llvm=true/ci-llvm=false/g' $RUST_FILE
+
+#	cd $PKG_PATH && echo "rust has been fixed!"
+#fi
+
+RUST_FILE="../feeds/packages/lang/rust/Makefile"
+
 if [ -f "$RUST_FILE" ]; then
-	echo " "
+    echo "Patching rust for CI..."
 
-	sed -i 's/ci-llvm=true/ci-llvm=false/g' $RUST_FILE
+    if ! grep -q -- "--ci false" "$RUST_FILE"; then
+        sed -i '/x.py/,/rust-src/ s/rust-src/rust-src \\\n\t\t--ci false/' "$RUST_FILE"
+    fi
 
-	cd $PKG_PATH && echo "rust has been fixed!"
+    echo "Rust patch done."
 fi
- 修复 Rust 编译失败（锁定稳定版本）
-
-
-
-#修复DiskMan编译失败
+# 修复DiskMan编译失败
 DM_FILE="./luci-app-diskman/applications/luci-app-diskman/Makefile"
 if [ -f "$DM_FILE" ]; then
 	echo " "
